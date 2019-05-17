@@ -46,13 +46,16 @@ cumplirUnDeseo::Chico->Deseo->Chico
 cumplirUnDeseo chico deseo = deseo chico
 
 wanda::Chico->Chico
-wanda chico = ((criterioMaduracion hacerMadurar).(flip cumplirUnDeseo (head(deseos chico)))) chico
+wanda chico = ((criterioMaduracion hacerMadurar).(primerDeseo chico)) chico
 
 cosmo::Chico->Chico
 cosmo = (criterioMaduracion desmadurar)
 
 muffinMagico::Chico->Chico
-muffinMagico chico = foldl cumplirUnDeseo chico (deseos chico)
+muffinMagico chico = foldl1 ($ chico) (deseos chico)
+
+primerDeseo::Chico->Deseo
+primerDeseo = (head.deseos)
 
 criterioMaduracion::(Int->Int)->Chico->Chico
 criterioMaduracion funcion (Chico nom ed hab des) = Chico nom (funcion ed) hab des
@@ -101,14 +104,17 @@ pretendiente condicion (chico:restoChicos) | condicion chico = chico
 
 habilidadesProhibidas = ["enamorar", "matar", "dominar el mundo"]
 
-infractoresDeDaRules::[Chico]->[String]
-infractoresDeDaRules = (listaNombresChicos.filter (tieneHabilidadesProhibidas))
-
-tieneHabilidadesProhibidas::Chico->Bool
-tieneHabilidadesProhibidas = (any (comparacion habilidadesProhibidas).(take 5).habilidades)
-
-comparacion::[String]->String->Bool
-comparacion habProhibidas hab = elem (hab) habProhibidas
-
 listaNombresChicos::[Chico]->[String]
 listaNombresChicos = map (nombre)
+
+infractoresDeDaRules::[Chico]->[String]
+infractoresDeDaRules = (listaNombresChicos.filter (tieneDeseoProhibido habilidadesProhibidas))
+
+tieneDeseoProhibido::[String]->Chico->Bool
+tieneDeseoProhibido habProhibidas chico = any (tieneHabilidadesProhibidas habilidadesProhibidas) (habilidadesCambiadas chico)
+
+tieneHabilidadesProhibidas::[String]->String->Bool
+tieneHabilidadesProhibidas habProhibidas habChico = elem (habChico) habProhibidas 
+
+habilidadesCambiadas::Chico->[String]
+habilidadesCambiadas = ((take 5).muffinMagico.habilidades)
