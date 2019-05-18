@@ -7,7 +7,6 @@ algunosVigilantes = [ ("El Comediante", ["Fuerza"], 1942), ("Buho Nocturno", ["L
 type Agente = (String,String)
 agentesDelGobierno = [("Jack Bauer","24"), ("El Comediante", "Watchmen"), ("Dr. Manhattan", "Watchmen"), ("Liam Neeson", "Taken")]
 
-
 nombre::Vigilante->String
 nombre (nom,_,_) = nom
 
@@ -39,8 +38,8 @@ listaNombresAgentes agentes = map (fst) agentes
 accidenteDeLaboratorio::Int->Vigilante
 accidenteDeLaboratorio anio = ("Doctor Manhattan", ["manipulacion de la materia a nivel atomico"], anio)
 
-actaDeKeene::[Vigilante]->[Vigilante]
-actaDeKeene vigilantes = filter (eliminarVigilantesViejos vigilantes) vigilantes
+--actaDeKeene::[Vigilante]->[Vigilante]
+--actaDeKeene vigilantes = filter (eliminarVigilantesViejos vigilantes) vigilantes
 
 eliminarVigilantesViejos::[Vigilante]->Vigilante->Bool
 eliminarVigilantesViejos vigilantes vigilante = (not.any (comparacionNombreAnio vigilante)) vigilantes
