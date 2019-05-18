@@ -1,5 +1,7 @@
 
 type Vigilante = (String,[String],Int)
+
+algunosVigilantes::[Vigilante]
 algunosVigilantes = [ ("El Comediante", ["Fuerza"], 1942), ("Buho Nocturno", ["Lucha", "Ingenierismo"], 1963), ("Rorschach", ["Perseverancia", "Deduccion", "Sigilo"], 1964), ("Espectro de Seda", ["Lucha", "Sigilo", "Fuerza"], 1962), ("Ozimandias", ["Inteligencia", "Más Inteligencia Aún"], 1968), ("Buho Nocturno", ["Lucha", "Inteligencia", "Fuerza"], 1939), ("Espectro de Seda", ["Lucha", "Sigilo"], 1940)]
 
 type Agente = (String,String)
@@ -38,14 +40,13 @@ accidenteDeLaboratorio::Int->Vigilante
 accidenteDeLaboratorio anio = ("Doctor Manhattan", ["manipulacion de la materia a nivel atomico"], anio)
 
 actaDeKeene::[Vigilante]->[Vigilante]
-actaDeKeene [] =[]
-actaDeKeene (x:xs) = filter (comparacionNombreAnio x) (actaDeKeene xs)
+actaDeKeene vigilantes = filter (eliminarVigilantesViejos vigilantes) vigilantes
 
-eliminar::Vigilante->[Vigilante]->[Vigilante]
-eliminar vigilante vigilantes = filter (comparacionNombreAnio vigilante) vigilantes
+eliminarVigilantesViejos::[Vigilante]->Vigilante->Bool
+eliminarVigilantesViejos vigilantes vigilante = (not.any (comparacionNombreAnio vigilante)) vigilantes
 
 comparacionNombreAnio::Vigilante->Vigilante->Bool
-comparacionNombreAnio vigilante1 vigilante2 = (nombre vigilante1 == nombre vigilante2) && (anioAparicion vigilante1 > anioAparicion vigilante2) 
+comparacionNombreAnio vigilante1 vigilante2 = (nombre vigilante1 == nombre vigilante2) && (anioAparicion vigilante1 < anioAparicion vigilante2) 
 
 filtrarVigilantes::(String->String->Bool)->String->[Vigilante]->[Vigilante]
 filtrarVigilantes comparacion filtrarSegun vigilantes = filter ((comparacion filtrarSegun).nombre) vigilantes
@@ -63,7 +64,7 @@ compararVigilantes criterio vig1 vig2 | criterio vig1 vig2 = vig1
                                       | otherwise = vig2
 
 comparacionSegunCriterio::Ord a=>(Vigilante->a)->Vigilante->Vigilante->Bool
-comparacionSegunCriterio criterio vig1 vig2 = criterio vig1 > criterio vig2
+comparacionSegunCriterio criterio vig1 vig2 = (>) (criterio vig1) (criterio vig2)
 
 nombreDelSalvador::Vigilante->Int
 nombreDelSalvador = (length.nombre)
