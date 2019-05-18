@@ -96,5 +96,5 @@ No se puede calcular la liquidacion ya que los costos infinitos.
 Si ese viaje se encuentra en la lista lo podrá encontrar, pero si este no se encuentrá va a estar infinitamente buscandolo.
 -}
 
-gongNeng:: Ord a=>a->(a->Bool)->(a->a)->[a]->a
+gongNeng:: Ord a=>a->(a->Bool)->(b->a)->[b]->a
 gongNeng arg1 arg2 arg3 = max arg1 . head . filter arg2 . map arg3
