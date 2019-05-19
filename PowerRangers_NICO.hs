@@ -66,6 +66,6 @@ repetir x = x:repetir x
 --a
 alfa5 = UnRanger {
     color = "metalico",
-    habilidadesP = ["reparar" ++ (repetir "ay")],
+    habilidadesP = ["reparar"]++(repetir "ay"),
     nivelDePelea = 0
 }
