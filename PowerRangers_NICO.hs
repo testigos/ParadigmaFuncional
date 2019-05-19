@@ -45,8 +45,8 @@ findOrElse::(a->Bool)->a->[a]->a
 findOrElse condicion valor lista | any (condicion) lista = (head.filter (condicion)) lista
                                  | otherwise = valor
 
-rangerLider::[PowerRangers]->(PowerRanger->Bool)->PowerRanger
-rangerLider rangers condicion = findOrElse condicion rangers (head.rangers)
+rangerLider::[PowerRanger]->(PowerRanger->Bool)->PowerRanger
+rangerLider rangers condicion = findOrElse condicion (head rangers) rangers
 
 queSeaRojo::PowerRanger->Bool
 queSeaRojo = ((=="rojo").color)
