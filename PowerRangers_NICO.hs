@@ -81,18 +81,17 @@ rangerHabilidoso = ((>5).length.habilidadesP)
 
 --7
 
-repetir::String->[String]
-repetir x = x:repetir x
+repetir::String->String
+repetir x = x ++ repetir x
 
 --a
 alfa5 = UnRanger {
     color = "metalico",
-    habilidadesP = ["reparar"]++(repetir "ay"),
+    habilidadesP = ["reparar", "decir "++(repetir "ay ")],
     nivelDePelea = 0
 }
 
 --8
-
 data ChicasSuperpoderosa = UnaChica {
     colorC::String,
     cantPelo::Int
