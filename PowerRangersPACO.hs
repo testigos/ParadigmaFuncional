@@ -75,3 +75,19 @@ maximumBy funcion = (maximum.map (funcion))
 
 rangerMasPoderoso::[PowerRanger]->PowerRanger
 rangerMasPoderoso = maximum
+
+rangerHabilidoso::PowerRanger->Bool
+rangerHabilidoso = ((>=5).length.habilidadesR)
+
+alfa5 = PowerRanger {
+    color = "metalico",
+    habilidadesR = ["reparar cosas","decir " ++ (decirAy)],
+    nivel = 0
+}
+
+decirAy = "ay " ++ decirAy
+
+--rangerLider [alfa5,power1] TERMINA
+--rangerHabilidoso alfa5 TERMINA
+--rangerMasPoderoso [alfa5,power1] TERMINA
+--TODAS TERMINAN ???????
