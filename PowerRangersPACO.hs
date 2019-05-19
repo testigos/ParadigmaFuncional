@@ -11,6 +11,12 @@ data PowerRanger = PowerRanger {
     nivel::Int
 } deriving (Show)
 
+instance Eq PowerRanger where
+    p1 == p2 = (color p1) == (color p2) && (nivel p1) == (nivel p2)
+
+instance Ord PowerRanger where
+    p1 <= p2 = (nivel p1) <= (nivel p2)
+
 power1 = PowerRanger {
     color = "rojo",
     habilidadesR = ["fuerza","agilidad"],
@@ -54,4 +60,18 @@ cantLetras habilidades = foldl1 (+) (map (length) habilidades)
 formarEquipoRanger::[String]->[Persona]->[PowerRanger]
 formarEquipoRanger colores personas = zipWith (convertirEnPowerRanger) colores (filter (esBuena) personas)
 
-findOrElse uahsidbjn
+findOrElse::Eq a => (a->Bool)->a->[a]->a
+findOrElse condicion valor lista 
+    | any (condicion) lista = (head.filter (condicion)) lista
+    | otherwise = valor
+
+rangerLider::[PowerRanger]->PowerRanger
+rangerLider equipo 
+    | elem "rojo" (map (color) equipo) = head (filter ((=="rojo").color) equipo)
+    | otherwise = head equipo
+
+maximumBy::Ord a => (b->a)->[b]->a
+maximumBy funcion = (maximum.map (funcion))
+
+rangerMasPoderoso::[PowerRanger]->PowerRanger
+rangerMasPoderoso = maximum
