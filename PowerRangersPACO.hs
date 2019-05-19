@@ -54,4 +54,4 @@ cantLetras habilidades = foldl1 (+) (map (length) habilidades)
 formarEquipoRanger::[String]->[Persona]->[PowerRanger]
 formarEquipoRanger colores personas = zipWith (convertirEnPowerRanger) colores (filter (esBuena) personas)
 
-findOrElse
+findOrElse uahsidbjn
