@@ -6,19 +6,19 @@ data Persona = Persona {
 } deriving (Show)
 
 data PowerRanger = PowerRanger {
-    color::String,
+    colorRanger::String,
     habilidadesR::[String],
     nivel::Int
 } deriving (Show)
 
 instance Eq PowerRanger where
-    p1 == p2 = (color p1) == (color p2) && (nivel p1) == (nivel p2)
+    p1 == p2 = (colorRanger p1) == (colorRanger p2) && (nivel p1) == (nivel p2)
 
 instance Ord PowerRanger where
     p1 <= p2 = (nivel p1) <= (nivel p2)
 
 power1 = PowerRanger {
-    color = "rojo",
+    colorRanger = "rojo",
     habilidadesR = ["fuerza","agilidad"],
     nivel = 10
 }
@@ -65,11 +65,6 @@ findOrElse condicion valor lista
     | any (condicion) lista = (head.filter (condicion)) lista
     | otherwise = valor
 
-rangerLider::[PowerRanger]->PowerRanger
-rangerLider equipo 
-    | elem "rojo" (map (color) equipo) = head (filter ((=="rojo").color) equipo)
-    | otherwise = head equipo
-
 maximumBy::Ord a => (b->a)->[b]->a
 maximumBy funcion = (maximum.map (funcion))
 
@@ -80,7 +75,7 @@ rangerHabilidoso::PowerRanger->Bool
 rangerHabilidoso = ((>=5).length.habilidadesR)
 
 alfa5 = PowerRanger {
-    color = "metalico",
+    colorRanger = "metalico",
     habilidadesR = ["reparar cosas","decir " ++ (decirAy)],
     nivel = 0
 }
@@ -91,3 +86,15 @@ decirAy = "ay " ++ decirAy
 --rangerHabilidoso alfa5 TERMINA
 --rangerMasPoderoso [alfa5,power1] TERMINA
 --TODAS TERMINAN ???????
+
+data Super = Super {
+    colorChica::String,
+    cantPelo::Int
+} deriving (Show)
+    
+lider::(a->String)->[a]->a
+lider colorChicaORanger equipo
+    | elem "rojo" (map (colorChicaORanger) equipo) = head (filter ((=="rojo").colorChicaORanger) equipo)
+    | otherwise = head equipo
+
+--C'EST FINI
