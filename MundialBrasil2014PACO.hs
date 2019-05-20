@@ -157,3 +157,5 @@ competir eq1 eq2
 seleccionarTitulares::Equipo->[Jugador]
 seleccionarTitulares equipo = take 11 (quickSort (<) (jugadores equipo))
 
+campeon::[Equipo]->Equipo
+campeon equipos = foldl1 competir equipos
