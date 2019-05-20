@@ -68,3 +68,8 @@ busquedaOrdenada requisitos criterio = ((ordenarSegun criterio).filter (cumpleBu
 
 --busquedaOrdenada [(ubicadoEn ["Recoleta","Palermo"]),(cumpleRango (ambientes) 1 2),(cumpleRango (precio) 8000 15000)] (mayorSegun superficie) [depto1,depto2,depto3,depto4]
 
+mailsDePersonasInteresadas::Propiedad->[Usuario]->[String]
+mailsDePersonasInteresadas depto = (map (mail).filter (personaInteresada depto))
+
+personaInteresada::Propiedad->Usuario->Bool
+personaInteresada depto persona = cumpleBusqueda (busqueda persona) depto
