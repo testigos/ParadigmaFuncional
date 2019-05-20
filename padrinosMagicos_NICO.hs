@@ -52,7 +52,7 @@ cosmo::Chico->Chico
 cosmo = (criterioMaduracion desmadurar)
 
 muffinMagico::Chico->Chico
-muffinMagico chico = foldl1 ($ chico) (deseos chico)
+muffinMagico chico = foldl cumplirUnDeseo chico (deseos chico)
 
 primerDeseo::Chico->Deseo
 primerDeseo = (head.deseos)
@@ -117,4 +117,4 @@ tieneHabilidadesProhibidas::[String]->String->Bool
 tieneHabilidadesProhibidas habProhibidas habChico = elem (habChico) habProhibidas 
 
 habilidadesCambiadas::Chico->[String]
-habilidadesCambiadas = ((take 5).muffinMagico.habilidades)
+habilidadesCambiadas = ((take 5).habilidades.muffinMagico)
