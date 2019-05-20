@@ -160,5 +160,9 @@ seleccionarTitulares equipo = take 11 (quickSort (<) (jugadores equipo))
 campeon::[Equipo]->Equipo
 campeon equipos = foldl1 competir equipos
 
+campeon2::[Equipo]->Equipo
+campeon2 [x] = x
+campeon2 (x:xs) = competir x (campeon2 xs)
+
 elGroso::[Equipo]->String
 elGroso equipos = (nombreJ.head.filter (esMVP).jugadores.campeon) equipos
