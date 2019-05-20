@@ -68,3 +68,14 @@ cumpleBusqueda prop requisitos = all ($ prop) requisitos
 cumpleBusquedaOrdenados::Busqueda->(Propiedad->Propiedad->Bool)->[Propiedad]->[Propiedad]
 cumpleBusquedaOrdenados busqueda criterioOrden = (ordenarSegun (criterioOrden). filter (flip cumpleBusqueda busqueda))
 
+--EJEMPLO
+requisitos::Busqueda
+requisitos = [(ubicadoEn ["Recoleta","Palermo"]), (cumpleRango ambientes 1 2), (cumpleRango precio 8000 15000)]
+
+propiedades::[Propiedad]
+propiedades = [depto1,depto2,depto3,depto4]
+{-
+cumpleBusquedaOrdenados requisitos (mayorSegun superficie) propiedades
+>[Propiedad {ambientes = 1, superficie = 45, precio = 10500.0, barrio = "Recoleta"}]
+-}
+
