@@ -144,10 +144,25 @@ jugarPartido (Equipo nom grup jug) = Equipo nom grup (map (modificarJugador) jug
 
 modificarJugador::Jugador->Jugador
 modificarJugador jugador 
-    | (not.esFarandulero) jugador && esMVP jugador && esJoven jugador = jugador {nombreJ = (nombreJ jugador), edad = (edad jugador), promGol = (promGol jugador), habilidad = (habilidad jugador), cansancio = 50}
-    | esJoven jugador = jugador {nombreJ = (nombreJ jugador), edad = (edad jugador), promGol = (promGol jugador), habilidad = (habilidad jugador), cansancio = (cansancio jugador) + (cansancio jugador) * 10 / 100}
-    | esMVP jugador && (not.esJoven) jugador = jugador {nombreJ = (nombreJ jugador), edad = (edad jugador), promGol = (promGol jugador), habilidad = (habilidad jugador), cansancio = (cansancio jugador) + 20}
-    | otherwise = jugador {nombreJ = (nombreJ jugador), edad = (edad jugador), promGol = (promGol jugador), habilidad = (habilidad jugador), cansancio = (cansancio jugador) * 2}
+    | (not.esFarandulero) jugador && esMVP jugador && esJoven jugador = cambiarCansancio (pasar50) jugador
+    | esJoven jugador = cambiarCansancio (sumar10p) jugador
+    | esMVP jugador && (not.esJoven) jugador = cambiarCansancio (sumar20) jugador
+    | otherwise = cambiarCansancio (duplicar) jugador
+
+cambiarCansancio::(Float->Float)->Jugador->Jugador
+cambiarCansancio criterio (Jugador nom edad prom hab can) = Jugador nom edad prom hab (criterio can)
+
+pasar50::Float->Float
+pasar50 _ = 50
+
+sumar10p::Float->Float
+sumar10p can = can + (can * 0.1)
+
+sumar20::Float->Float
+sumar20 = (20 +)
+
+duplicar::Float->Float
+duplicar = (2 *)
 
 competir::Equipo->Equipo->Equipo
 competir eq1 eq2 
