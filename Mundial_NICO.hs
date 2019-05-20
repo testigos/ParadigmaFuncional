@@ -135,5 +135,36 @@ figuritasDificiles::Char->[Equipo]->[Jugador]
 figuritasDificiles grupoFig = (filter (losDificiles).concat.map jugadores.filter ((==grupoFig).grupo)) 
 
 losDificiles::Jugador->Bool
-losDificiles jugador = criterioFigura jugador && (not.(comparacionFarandulera jugadoresFaranduleros)) jugador && ((<27).edad) jugador
+losDificiles jugador = criterioFigura jugador && (not.(comparacionFarandulera jugadoresFaranduleros)) jugador && esJoven jugador
 
+esJoven::Jugador->Bool
+esJoven = ((<27).edad)
+
+{- EJERCICIO 4
+
+Se conoce que tras un partido del mundial, los jugadores se cansan debido al extenso calendario que tuvieron en el año y a que 
+muchos ya están prontos a su retiro. Definir la función jugarPartido, la cual dado un equpo modifique a sus jugadores según los 
+siguientes criterios:
+Si el jugador no es farandulero, es joven y figura, su cansancio pasa a ser 50.
+Para el resto de los jugadores jóvenes, su cansancio aumenta un 10%.
+Si el jugador no es joven y es figura del equipo se incrementa en 20 unidades su cansancio.
+En cualquier otro caso, el cansancio se duplica.
+
+-}
+jugarPartido::Equipo->Equipo
+jugarPartido (Equipo nom grup jug) = Equipo nom grup (map modificarCansancio jug)
+
+modificarCansancio::Jugador->Jugador
+modificarCansancio jugador | losDificiles jugador = cambiarCansancio (hacer50) jugador
+                     | esJoven jugador = cambiarCansancio (\x->x+x*0.1) jugador
+                     | criterioFigura jugador = cambiarCansancio (+20) jugador
+                     | otherwise = cambiarCansancio (2*) jugador
+
+cambiarCansancio::(Float->Float)->Jugador->Jugador
+cambiarCansancio funcion (Jugador nom ed promG hab cans) = Jugador nom ed promG hab (funcion cans)
+
+hacer50::Float->Float
+hacer50 x = 50
+
+--incrementar10::Float->Float
+--incrementar10 x = x + x*0.1
