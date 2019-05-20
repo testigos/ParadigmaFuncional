@@ -132,7 +132,7 @@ Ser joven (menor a 27 años)
 No ser farandulero.
 -}
 figuritasDificiles::Char->[Equipo]->[Jugador]
-figuritasDificiles grupoFig = (filter (losDificiles).concat.map jugadores.filter ((==grupoFig).grupo)) 
+figuritasDificiles grupoFig = (map nombreJ.filter losDificiles.concat.map jugadores.filter ((==grupoFig).grupo)) 
 
 losDificiles::Jugador->Bool
 losDificiles jugador = criterioFigura jugador && (not.(comparacionFarandulera jugadoresFaranduleros)) jugador && esJoven jugador
@@ -156,9 +156,9 @@ jugarPartido (Equipo nom grup jug) = Equipo nom grup (map modificarCansancio jug
 
 modificarCansancio::Jugador->Jugador
 modificarCansancio jugador | losDificiles jugador = cambiarCansancio (hacer50) jugador
-                     | esJoven jugador = cambiarCansancio (\x->x+x*0.1) jugador
-                     | criterioFigura jugador = cambiarCansancio (+20) jugador
-                     | otherwise = cambiarCansancio (2*) jugador
+                           | esJoven jugador = cambiarCansancio (\x->x+x*0.1) jugador
+                           | criterioFigura jugador = cambiarCansancio (+20) jugador
+                           | otherwise = cambiarCansancio (2*) jugador
 
 cambiarCansancio::(Float->Float)->Jugador->Jugador
 cambiarCansancio funcion (Jugador nom ed promG hab cans) = Jugador nom ed promG hab (funcion cans)
@@ -209,9 +209,9 @@ Dar 2 resoluciones diferentes al ejercicio
 campeon::[Equipo]->Equipo
 campeon equipos = foldl1 ganadorPartido equipos
 
---campeonVersion2::[Equipo]->Equipo
---campeonVersion2 []= []
---campeonVersion2 (x:y:zs) = (gandorPartido x y)
+campeonVersion2::[Equipo]->Equipo
+campeonVersion2 []= []
+campeonVersion2 (x:y:zs) = (gandorPartido x y)
 
 {-
 7) Los días pasaron, las vuvuzelas se escucharon, una nueva Larissa Riquelme se hizo conocida, y el pulpo Paul volvió a 
