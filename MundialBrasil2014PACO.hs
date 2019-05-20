@@ -144,7 +144,7 @@ jugarPartido (Equipo nom grup jug) = Equipo nom grup (map (modificarJugador) jug
 
 modificarJugador::Jugador->Jugador
 modificarJugador jugador 
-    | (not.esFarandulero) jugador && esMVP jugador && esJoven jugador = cambiarCansancio (pasar50) jugador
+    | esDificil jugador = cambiarCansancio (pasar50) jugador
     | esJoven jugador = cambiarCansancio (sumar10p) jugador
     | esMVP jugador && (not.esJoven) jugador = cambiarCansancio (sumar20) jugador
     | otherwise = cambiarCansancio (duplicar) jugador
@@ -175,9 +175,9 @@ seleccionarTitulares equipo = take 11 (quickSort (<) (jugadores equipo))
 campeon::[Equipo]->Equipo
 campeon equipos = foldl1 competir equipos
 
-campeon2::[Equipo]->Equipo
-campeon2 [x] = x
-campeon2 (x:xs) = competir x (campeon2 xs)
+--campeon2::[Equipo]->Equipo
+--campeon2 [x] = x
+--campeon2 (x:y:xs) = competir (competir x y) head xs
 
 elGroso::[Equipo]->String
 elGroso equipos = (nombreJ.head.filter (esMVP).jugadores.campeon) equipos
