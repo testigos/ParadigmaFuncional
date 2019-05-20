@@ -41,7 +41,7 @@ blanco = UnRanger {
 convertirEnPowerRanger::String->Persona->PowerRanger
 convertirEnPowerRanger color (UnaPersona hab _) = UnRanger color (hacerSuper hab) ((sum.map (length)) hab)
 
-hacerSuper::[String]->[String]
+habilidadesSuper::[String]->[String]
 hacerSuper hab = map( ("super"++).primeraLetraMayuscula) hab
 
 primeraLetraMayuscula::String->String
