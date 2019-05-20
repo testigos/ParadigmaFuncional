@@ -63,3 +63,7 @@ capusotto (Chico nom edad alt) = Risa (edad * 2) (edad * 2)
 
 produccionEnergeticaRisas::[(Chico->Risa)]->[Chico]->Int
 produccionEnergeticaRisas monstruos = (sum.map (energiaDeRisa).concat.map (gritosorisas monstruos))
+
+produccionEnergetica::(a->Int)->[(Chico->a)]->[Chico]->Int
+produccionEnergetica criterio monstruosocomediantes = (sum.map (criterio).concat.map (gritosorisas monstruosocomediantes))
+--Criterio tiene que ser (energiaDeRisa) o (energiaDeGrito)
