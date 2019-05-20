@@ -186,8 +186,14 @@ mayorPromedioDeGol = (sum.map promGol.take 11.(quickSort (<=)).jugadores)
 instance Ord Equipo where
     (<=) e1 e2 = mayorPromedioDeGol e1 <= mayorPromedioDeGol e2
 
+instance Eq Equipo where
+    (==) e1 e2 = mayorPromedioDeGol e1 == mayorPromedioDeGol e2
+
 instance Ord Jugador where
     (<=) j1 j2 = cansancio j1 <= cansancio j2
+    
+instance Eq Jugador where
+    (==) j1 j2 = cansancio j1 == cansancio j2
 {-
 6) Sabiendo ya cómo se decide el ganador de un partido, ahora queremos saber, a partir de un grupo de equipos, qué equipo se 
 consagrará campeón del torneo.
@@ -217,4 +223,4 @@ equipo elegido ganador (el campeón), se quiere saber el nombre del primer jugad
 -}
 
 elGroso::[Equipo]->String
-elGroso = (nombreJ.head.figurasEquipo.jugadores.campeon)
+elGroso = (nombreJ.head.figurasEquipo.campeon)
