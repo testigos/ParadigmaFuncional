@@ -90,4 +90,7 @@ p1 = Usuario {
 }
 
 mailsDePersonasInteresadas::Propiedad->[Usuario]->[String]
-mailsDePersonasInteresadas dpto = (map mail.filter ((cumpleBusqueda dpto).busqueda))
+mailsDePersonasInteresadas dpto = (map mail.interesados dpto)
+
+interesados::Propiedad->[Usuario]->[Usuario]
+interesados dpto = (filter ((cumpleBusqueda dpto).busqueda))
