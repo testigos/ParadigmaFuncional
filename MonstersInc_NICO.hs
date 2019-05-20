@@ -28,23 +28,29 @@ type Monstruos = [(Chico->Grito)]
 
 sullivan::Chico->Grito
 sullivan chico = UnGrito ((nombreGrito.nombre) chico) ((intensidadGrito.edad) chico) ((mojarDelGrito.edad) chico)
-                      where nombreGrito nombre = ((++"GH").concat.take (length nombre).(iterate (++"A"))) []
-                            intensidadGrito = (div 20)
-                            mojarDelGrito = (<3)
+                        where  nombreGrito nombre = ((++"GH").concat.take (length nombre).repeat) "A"
+                               intensidadGrito = (div 20)
+                               mojarDelGrito = (<3)
+
+
 
 rangallBoggs::Chico->Grito
 rangallBoggs chico = UnGrito "¡Mamadera!" ((intensidadGrito.nombre) chico) ((mojarDelGrito.altura) chico)
                       where intensidadGrito = cantVocales
-                            mojarDelGrito x = x>0.8 && x<1.2
+                            mojarDelGrito x = x > 0.8 && x < 1.2
+
+norris::Chico->Grito
+norris chico = UnGrito ['a'..'z'] 1000 True
+
+ositoCariñoso::Chico->Grito
+ositoCariñoso chico = UnGrito "uf" (edad chico) False
 
 cantVocales::String->Int
 cantVocales = (length.filter (compararVocales ['a','e','i','o','u']))
 
 compararVocales::[Char]->Char->Bool
-compararVocales vocales letra = elem (letra) vocales
+compararVocales vocales letra = elem letra vocales
 
-norris::Chico->Grito
-norris chico = UnGrito ['a'..'z'] 1000 True
 
 --EJERCICIO 3
 
@@ -53,8 +59,8 @@ pam funciones elemento = map ($ elemento) funciones
 
 --EJERCICIO 4
 
-gritos::Monstruos->Chico->[Grito]
-gritos monstruos chico = pam monstruos chico
+gritosOrisas::[(Chico->a)]->Chico->[a]
+gritosOrisas monsOcom chico = pam monsOcom chico
 
 --EJERCICIO 5
 
@@ -62,10 +68,10 @@ produccionEnergeticaGritos::Monstruos->[Chico]->Int
 produccionEnergeticaGritos monstruos = (calculoEnergia.(listaDeGritos monstruos))
 
 calculoEnergia::[Grito]->Int
-calculoEnergia = (sum. map intensidad)
+calculoEnergia = (sum. map energiaDeUnGrito)
 
 listaDeGritos::Monstruos->[Chico]->[Grito]
-listaDeGritos monstruos = (concat.map (gritos monstruos))
+listaDeGritos monstruos = (concat.map (gritosOrisas monstruos))
 
 --EJERCICIO 6
 
@@ -88,14 +94,12 @@ produccionEnergeticaRisa::Comediantes->[Chico]->Int
 produccionEnergeticaRisa comediantes = (calculoEnergiaRisa.(listaDeRisas comediantes))
                      
 calculoEnergiaRisa::[Risa]->Int
-calculoEnergiaRisa = (sum. map intensidadR)
+calculoEnergiaRisa = (sum. map energiaRisa)
                      
 listaDeRisas::Comediantes->[Chico]->[Risa]
-listaDeRisas comediantes = (concat.map (risas comediantes))
-
-risas::Comediantes->Chico->[Risa]
-risas comediantes chico = pam comediantes chico
+listaDeRisas comediantes = (concat.map (gritosOrisas comediantes))
 
 --EJERCICIO 7
 
-data Productor = Monstruo | Comediante
+produccionEnergetica:: (a->Int)->[(Chico->a)]->[Chico]->Int
+produccionEnergetica criterio mons = (sum.map (criterio).concat.map (gritosOrisas mons))
