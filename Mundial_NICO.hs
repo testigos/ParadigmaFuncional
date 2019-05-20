@@ -178,8 +178,41 @@ Se pide entonces, dados dos equipos, devolver al ganador del partido, con sus ju
 -}
 
 ganadorPartido::Equipo->Equipo->Equipo
-ganadorPartido equipo1 equipo2 | mayorPromedioDeGol equipo1 > mayorPromedioDeGol equipo2 = modificarCansancio equipo1
-                               | otherwise = modificarCansancio equipo2
+ganadorPartido equipo1 equipo2 | mayorPromedioDeGol equipo1 > mayorPromedioDeGol equipo2 = jugarPartido equipo1
+                               | otherwise = jugarPartido equipo2
 
 mayorPromedioDeGol::Equipo->Float
 mayorPromedioDeGol = (sum.map promGol.take 11.(quickSort cansancio).jugadores)
+
+mayorCansancio::
+
+{-
+6) Sabiendo ya cómo se decide el ganador de un partido, ahora queremos saber, a partir de un grupo de equipos, qué equipo se 
+consagrará campeón del torneo.
+¿Cómo se juegan los partidos? 
+El primero juega contra el segundo → Ganador1
+Ganador1 juega contra tercer equipo → Ganador2
+Ganador2 juega contra cuarto equipo → Ganador3
+….
+Y así hasta que el ganador del último partido se consagra campeón.
+Dar 2 resoluciones diferentes al ejercicio
+-}
+
+campeon::[Equipo]->Equipo
+campeon equipos = foldl1 ganadorPartido equipos
+
+--campeonVersion2::[Equipo]->Equipo
+--campeonVersion2 []= []
+--campeonVersion2 (x:y:zs) = (gandorPartido x y)
+
+{-
+7) Los días pasaron, las vuvuzelas se escucharon, una nueva Larissa Riquelme se hizo conocida, y el pulpo Paul volvió a 
+acertar en los resultados. Después de un gran mundial se quiere saber quién va a ser elegido como el mejor de todos para 
+entregarle el premio y ser reconocido en todo el mundo como “EL GROSO”. Para ello se ingresa una lista de equipos, y del 
+equipo elegido ganador (el campeón), se quiere saber el nombre del primer jugador que cumpla la condición de ser figura 
+(en todo equipo hay 1 por lo menos).
+
+-}
+
+elGroso::[Equipo]->String
+elGroso = (nombreJ.head.figurasEquipo.jugadores.campeon)
