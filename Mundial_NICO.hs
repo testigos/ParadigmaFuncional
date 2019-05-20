@@ -181,10 +181,10 @@ ganadorPartido::Equipo->Equipo->Equipo
 ganadorPartido equipo1 equipo2 = max equipo1 equipo2
 
 mayorPromedioDeGol::Equipo->Float
-mayorPromedioDeGol = (sum.map promGol.take 11.(quickSort min).jugadores)
+mayorPromedioDeGol = (sum.map promGol.take 11.(quickSort (<=)).jugadores)
 
 instance Ord Equipo where
-    (<=) e1 e2 = mayorPromedioGol e1 <= mayorPromedioGol e2
+    (<=) e1 e2 = mayorPromedioDeGol e1 <= mayorPromedioDeGol e2
 
 instance Ord Jugador where
     (<=) j1 j2 = cansancio j1 <= cansancio j2
