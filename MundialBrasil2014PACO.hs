@@ -8,6 +8,12 @@ data Jugador = Jugador {
     cansancio::Float
 } deriving (Show)
 
+instance Eq Jugador where
+    jug1 == jug2 = (nombreJ jug1) == (nombreJ jug2)
+
+instance Ord Jugador where
+    jug1 <= jug2 = (cansancio jug1) <= (cansancio jug2)
+
 data Equipo = Equipo {
     nombreE::String,
     grupo::Char,
@@ -142,4 +148,12 @@ modificarJugador jugador
     | esJoven jugador = jugador {nombreJ = (nombreJ jugador), edad = (edad jugador), promGol = (promGol jugador), habilidad = (habilidad jugador), cansancio = (cansancio jugador) + (cansancio jugador) * 10 / 100}
     | esMVP jugador && (not.esJoven) jugador = jugador {nombreJ = (nombreJ jugador), edad = (edad jugador), promGol = (promGol jugador), habilidad = (habilidad jugador), cansancio = (cansancio jugador) + 20}
     | otherwise = jugador {nombreJ = (nombreJ jugador), edad = (edad jugador), promGol = (promGol jugador), habilidad = (habilidad jugador), cansancio = (cansancio jugador) * 2}
+
+competir::Equipo->Equipo->Equipo
+competir eq1 eq2 
+    | (sum.map (promGol).seleccionarTitulares) eq1 > (sum.map (promGol).seleccionarTitulares) eq2 = jugarPartido eq1
+    | otherwise = jugarPartido eq2
+
+seleccionarTitulares::Equipo->[Jugador]
+seleccionarTitulares equipo = take 11 (quickSort (<) (jugadores equipo))
 
