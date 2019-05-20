@@ -10,7 +10,7 @@ data Grito = UnGrito {
 
 energiaDeUnGrito::Grito->Int
 energiaDeUnGrito grito | mojoLaCama grito = nivelTerror grito * (intensidad grito)^2
-                       | otherwise = ((3*).nivelTerror) grito
+                       | otherwise = ((3*).nivelTerror) grito + (intensidad grito)
                                 
 nivelTerror::Grito->Int
 nivelTerror = length.onomatopeya
@@ -34,8 +34,8 @@ sullivan chico = UnGrito ((nombreGrito.nombre) chico) ((intensidadGrito.edad) ch
 
 
 
-rangallBoggs::Chico->Grito
-rangallBoggs chico = UnGrito "¡Mamadera!" ((intensidadGrito.nombre) chico) ((mojarDelGrito.altura) chico)
+randallBoggs::Chico->Grito
+randallBoggs chico = UnGrito "¡Mamadera!" ((intensidadGrito.nombre) chico) ((mojarDelGrito.altura) chico)
                       where intensidadGrito = cantVocales
                             mojarDelGrito x = x > 0.8 && x < 1.2
 
