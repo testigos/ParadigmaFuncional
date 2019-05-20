@@ -39,6 +39,8 @@ aprenderHabilidades habilidades (Chico nom edad hab des) = Chico nom edad (hab +
 
 jugarTodosLosNeedForSpeed = ["jugar a need for speed " ++ (show x) | x <- [0..]] 
 
+--map (("jugar a need for speed "++).show) [ x | x <- [0..]]
+
 serGrosoEnNeedForSpeed::Chico->Chico
 serGrosoEnNeedForSpeed (Chico nom edad hab des) = Chico nom edad (hab ++ jugarTodosLosNeedForSpeed) des
 
