@@ -56,12 +56,14 @@ mayorSegun criterio a b = criterio a > criterio b
 -- ordenarSegun (mayorSegun length) ["aa","Bbbbs","ada"]
 --["Bbbbs","ada","aa"]
 
+--EJERCICIO 2
 ubicadoEn::[String]->Requisito
 ubicadoEn barrios dpto = any (== (barrio dpto)) barrios
 
 cumpleRango::Ord a =>(Propiedad->a)->a->a->Requisito
 cumpleRango funcion min max dpto = between min max (funcion dpto)
 
+--EJERCICIO 3
 cumpleBusqueda::Propiedad->Busqueda->Bool
 cumpleBusqueda prop requisitos = all ($ prop) requisitos
 
@@ -74,8 +76,18 @@ requisitos = [(ubicadoEn ["Recoleta","Palermo"]), (cumpleRango ambientes 1 2), (
 
 propiedades::[Propiedad]
 propiedades = [depto1,depto2,depto3,depto4]
+
 {-
 cumpleBusquedaOrdenados requisitos (mayorSegun superficie) propiedades
 >[Propiedad {ambientes = 1, superficie = 45, precio = 10500.0, barrio = "Recoleta"}]
 -}
 
+--EJERCICIO 4
+
+p1 = Usuario {
+    mail = "a..asdasd",
+    busqueda = requisitos
+}
+
+mailsDePersonasInteresadas::Propiedad->[Usuario]->[String]
+mailsDePersonasInteresadas dpto = (map mail.filter ((cumpleBusqueda dpto).busqueda))
