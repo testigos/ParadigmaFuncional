@@ -12,6 +12,11 @@ data Chico = Chico {
     altura::Float
 } deriving (Show)
 
+data Risa = Risa {
+    duracion::Int,
+    intensidadR::Int
+} deriving (Show)
+
 energiaDeGrito::Grito->Int
 energiaDeGrito grito 
     | mojoLaCama grito = (length.onomatopeya) grito * (intensidad grito) ^ 2
@@ -44,8 +49,17 @@ osito (Chico nom edad alt) = Grito "uf" edad False
 pam::[(a->b)]->a->[b]
 pam funciones elemento = map (flip ($) elemento) funciones
 
-gritos::[(Chico->Grito)]->Chico->[Grito]
-gritos monstruos chico = pam monstruos chico
+gritosorisas::[(Chico->a)]->Chico->[a]
+gritosorisas monstruosocomediantes chico = pam monstruosocomediantes chico
 
 produccionEnergeticaGritos::[(Chico->Grito)]->[Chico]->Int
-produccionEnergeticaGritos monstruos = (sum.map (energiaDeGrito).concat.map (gritos monstruos))
+produccionEnergeticaGritos monstruos = (sum.map (energiaDeGrito).concat.map (gritosorisas monstruos))
+
+energiaDeRisa::Risa->Int
+energiaDeRisa (Risa dur int) = dur ^ int
+
+capusotto::Chico->Risa
+capusotto (Chico nom edad alt) = Risa (edad * 2) (edad * 2)
+
+produccionEnergeticaRisas::[(Chico->Risa)]->[Chico]->Int
+produccionEnergeticaRisas monstruos = (sum.map (energiaDeRisa).concat.map (gritosorisas monstruos))
