@@ -35,7 +35,7 @@ randall (Chico nom edad alt) = Grito ("Mamadera!") (cantVocales nom) (alt < 1.2 
 cantVocales::String->Int
 cantVocales = (length.filter (esVocal))
 
-vocales = ['a','e','i','o','u']
+vocales = ['a','e','i','o','u','A','E','I','O','U']
 
 esVocal::Char->Bool
 esVocal letra = elem letra vocales
@@ -65,5 +65,5 @@ produccionEnergeticaRisas::[(Chico->Risa)]->[Chico]->Int
 produccionEnergeticaRisas monstruos = (sum.map (energiaDeRisa).concat.map (gritosorisas monstruos))
 
 produccionEnergetica::(a->Int)->[(Chico->a)]->[Chico]->Int
-produccionEnergetica criterio monstruosocomediantes = (sum.map (criterio).concat.map (gritosorisas monstruosocomediantes))
+produccionEnergetica criterio monstruosocomediantes = (sum.map (criterio).concatMap (gritosorisas monstruosocomediantes))
 --Criterio tiene que ser (energiaDeRisa) o (energiaDeGrito)
