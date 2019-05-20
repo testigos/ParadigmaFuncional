@@ -121,3 +121,25 @@ tieneFarandulero equipo = any (esFarandulero) (jugadores equipo)
 esFarandulero::Jugador->Bool
 esFarandulero jugador = elem (nombreJ jugador) jugadoresFaranduleros
 
+figuritasDificiles::[Equipo]->Char->[String]
+figuritasDificiles equipos gru = (map (nombreJ).filter (esDificil).concat.map (jugadores).(filtrarPorGrupo gru)) equipos
+
+filtrarPorGrupo::Char->[Equipo]->[Equipo]
+filtrarPorGrupo gru equipos = filter ((==gru).grupo) equipos
+
+esDificil::Jugador->Bool
+esDificil jugador = esMVP jugador && esJoven jugador && (not.esFarandulero) jugador
+
+esJoven::Jugador->Bool
+esJoven jugador = (edad jugador) < 27
+
+jugarPartido::Equipo->Equipo
+jugarPartido (Equipo nom grup jug) = Equipo nom grup (map (modificarJugador) jug)
+
+modificarJugador::Jugador->Jugador
+modificarJugador jugador 
+    | (not.esFarandulero) jugador && esMVP jugador && esJoven jugador = jugador {nombreJ = (nombreJ jugador), edad = (edad jugador), promGol = (promGol jugador), habilidad = (habilidad jugador), cansancio = 50}
+    | esJoven jugador = jugador {nombreJ = (nombreJ jugador), edad = (edad jugador), promGol = (promGol jugador), habilidad = (habilidad jugador), cansancio = (cansancio jugador) + (cansancio jugador) * 10 / 100}
+    | esMVP jugador && (not.esJoven) jugador = jugador {nombreJ = (nombreJ jugador), edad = (edad jugador), promGol = (promGol jugador), habilidad = (habilidad jugador), cansancio = (cansancio jugador) + 20}
+    | otherwise = jugador {nombreJ = (nombreJ jugador), edad = (edad jugador), promGol = (promGol jugador), habilidad = (habilidad jugador), cansancio = (cansancio jugador) * 2}
+
