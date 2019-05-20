@@ -168,3 +168,18 @@ hacer50 x = 50
 
 --incrementar10::Float->Float
 --incrementar10 x = x + x*0.1
+
+{- EJERCICIO 5
+
+5) Empezó el mundial y los partidos se empiezan a jugar. ¿Cómo saber quién gana en cada partido? Cuando se enfrentan 2 equipos, 
+se seleccionan los primeros 11 jugadores (por equipo) que menos cansados están y se suma su promedio de gol. El que sume un mejor 
+promedio gana el partido. 
+Se pide entonces, dados dos equipos, devolver al ganador del partido, con sus jugadores modificados por haber jugado el partido. 
+-}
+
+ganadorPartido::Equipo->Equipo->Equipo
+ganadorPartido equipo1 equipo2 | mayorPromedioDeGol equipo1 > mayorPromedioDeGol equipo2 = modificarCansancio equipo1
+                               | otherwise = modificarCansancio equipo2
+
+mayorPromedioDeGol::Equipo->Float
+mayorPromedioDeGol = (sum.map promGol.take 11.(quickSort cansancio).jugadores)
