@@ -49,3 +49,8 @@ ordenarSegun criterio (x:xs) = (ordenarSegun criterio.filter (not.criterio x)) x
 
 between x y z = x <= z && y >= z
 
+mayorSegun::Ord b => (a->b)->a->a->Bool 
+mayorSegun f x y = (f x) > (f y)
+
+--ordenarSegun (mayorSegun length) ["pepe","aosjdn","as","asdassdasada"]
+
