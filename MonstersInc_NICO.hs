@@ -6,7 +6,7 @@ data Grito = UnGrito {
     onomatopeya::String,
     intensidad::Int,
     mojoLaCama::Bool
-} deriving (Show)
+}deriving (Show)
 
 energiaDeUnGrito::Grito->Int
 energiaDeUnGrito grito | mojoLaCama grito = nivelTerror grito * (intensidad grito)^2
@@ -21,7 +21,7 @@ data Chico = UnChico {
     nombre::String,
     edad::Int,
     altura::Float
-}
+} deriving (Show)
 
 type Monstruo = (Chico->Grito)
 type Monstruos = [(Chico->Grito)]
@@ -56,3 +56,46 @@ pam funciones elemento = map ($ elemento) funciones
 gritos::Monstruos->Chico->[Grito]
 gritos monstruos chico = pam monstruos chico
 
+--EJERCICIO 5
+
+produccionEnergeticaGritos::Monstruos->[Chico]->Int
+produccionEnergeticaGritos monstruos = (calculoEnergia.(listaDeGritos monstruos))
+
+calculoEnergia::[Grito]->Int
+calculoEnergia = (sum. map intensidad)
+
+listaDeGritos::Monstruos->[Chico]->[Grito]
+listaDeGritos monstruos = (concat.map (gritos monstruos))
+
+--EJERCICIO 6
+
+data Risa = UnaRisa {
+    duracion::Int,
+    intensidadR::Int
+} deriving (Show)
+
+energiaRisa::Risa->Int
+energiaRisa (UnaRisa d i) = d^i
+
+type Comediante = (Chico->Risa)
+type Comediantes = [Comediante]
+
+capusotto::Chico->Risa
+capusotto (UnChico _ e _) = UnaRisa (duracionRisa e) (duracionRisa e)
+                     where duracionRisa = (*2)
+
+produccionEnergeticaRisa::Comediantes->[Chico]->Int
+produccionEnergeticaRisa comediantes = (calculoEnergiaRisa.(listaDeRisas comediantes))
+                     
+calculoEnergiaRisa::[Risa]->Int
+calculoEnergiaRisa = (sum. map intensidadR)
+                     
+listaDeRisas::Comediantes->[Chico]->[Risa]
+listaDeRisas comediantes = (concat.map (risas comediantes))
+
+risas::Comediantes->Chico->[Risa]
+risas comediantes chico = pam comediantes chico
+
+--EJERCICIO 7
+
+data Productor = Monstruo | Comediante
