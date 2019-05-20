@@ -1,7 +1,5 @@
 import Text.Show.Functions
 
-type Monstruo = (Chico->Grito)
-
 data Grito = Grito {
     onomatopeya::String,
     intensidad::Int,
@@ -43,3 +41,11 @@ chuck (Chico nom edad alt) = Grito (['a'..'z']) 1000 True
 osito::Chico->Grito
 osito (Chico nom edad alt) = Grito "uf" edad False
 
+pam::[(a->b)]->a->[b]
+pam funciones elemento = map (flip ($) elemento) funciones
+
+gritos::[(Chico->Grito)]->Chico->[Grito]
+gritos monstruos chico = pam monstruos chico
+
+produccionEnergeticaGritos::[(Chico->Grito)]->[Chico]->Int
+produccionEnergeticaGritos monstruos = (sum.map (energiaDeGrito).concat.map (gritos monstruos))
