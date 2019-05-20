@@ -1,6 +1,6 @@
 import Text.Show.Functions
 
-type Requisito = Propiedad -> Bool
+type Requisito = Propiedad->Bool
 type Busqueda = [Requisito]
 
 data Propiedad = Propiedad {
@@ -58,4 +58,13 @@ ubicadoEn::[String]->Propiedad->Bool
 ubicadoEn barrios depto = elem (barrio depto) barrios
 
 cumpleRango::Ord b => (Propiedad->b)->b->b->Propiedad->Bool
-cumpleRango f x y depto = x < (f depto) && y > (f depto)
+cumpleRango f x y depto = x <= (f depto) && y >= (f depto)
+
+cumpleBusqueda::Busqueda->Propiedad->Bool
+cumpleBusqueda requisitos depto = all (flip ($) depto) requisitos
+
+busquedaOrdenada::Busqueda->(Propiedad->Propiedad->Bool)->[Propiedad]->[Propiedad]
+busquedaOrdenada requisitos criterio = ((ordenarSegun criterio).filter (cumpleBusqueda requisitos))
+
+--busquedaOrdenada [(ubicadoEn ["Recoleta","Palermo"]),(cumpleRango (ambientes) 1 2),(cumpleRango (precio) 8000 15000)] (mayorSegun superficie) [depto1,depto2,depto3,depto4]
+
