@@ -58,7 +58,7 @@ ubicadoEn::[String]->Propiedad->Bool
 ubicadoEn barrios depto = elem (barrio depto) barrios
 
 cumpleRango::Ord b => (Propiedad->b)->b->b->Propiedad->Bool
-cumpleRango f x y depto = x <= (f depto) && y >= (f depto)
+cumpleRango f x y depto = between x y (f depto)
 
 cumpleBusqueda::Busqueda->Propiedad->Bool
 cumpleBusqueda requisitos depto = all (flip ($) depto) requisitos
