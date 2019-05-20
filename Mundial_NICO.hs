@@ -178,14 +178,16 @@ Se pide entonces, dados dos equipos, devolver al ganador del partido, con sus ju
 -}
 
 ganadorPartido::Equipo->Equipo->Equipo
-ganadorPartido equipo1 equipo2 | mayorPromedioDeGol equipo1 > mayorPromedioDeGol equipo2 = jugarPartido equipo1
-                               | otherwise = jugarPartido equipo2
+ganadorPartido equipo1 equipo2 = max equipo1 equipo2
 
 mayorPromedioDeGol::Equipo->Float
-mayorPromedioDeGol = (sum.map promGol.take 11.(quickSort cansancio).jugadores)
+mayorPromedioDeGol = (sum.map promGol.take 11.(quickSort min).jugadores)
 
-mayorCansancio::
+instance Ord Equipo where
+    (<=) e1 e2 = mayorPromedioGol e1 <= mayorPromedioGol e2
 
+instance Ord Jugador where
+    (<=) j1 j2 = cansancio j1 <= cansancio j2
 {-
 6) Sabiendo ya cómo se decide el ganador de un partido, ahora queremos saber, a partir de un grupo de equipos, qué equipo se 
 consagrará campeón del torneo.
