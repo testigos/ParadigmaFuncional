@@ -54,3 +54,8 @@ mayorSegun f x y = (f x) > (f y)
 
 --ordenarSegun (mayorSegun length) ["pepe","aosjdn","as","asdassdasada"]
 
+ubicadoEn::[String]->Propiedad->Bool
+ubicadoEn barrios depto = elem (barrio depto) barrios
+
+cumpleRango::Ord b => (Propiedad->b)->b->b->Propiedad->Bool
+cumpleRango f x y depto = x < (f depto) && y > (f depto)
